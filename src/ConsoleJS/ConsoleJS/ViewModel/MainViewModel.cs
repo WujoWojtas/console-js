@@ -20,6 +20,8 @@ namespace ConsoleJS.ViewModel
     {
         public GalaSoft.MvvmLight.Command.RelayCommand RunCommand { get; set; }
 
+        public GalaSoft.MvvmLight.Command.RelayCommand ClearCommand { get; set; }
+
         private string scriptText;
 
         public string ScriptText
@@ -59,14 +61,10 @@ namespace ConsoleJS.ViewModel
             ////}
 
             this.RunCommand = new GalaSoft.MvvmLight.Command.RelayCommand(this.RunScript);
+            this.ClearCommand = new GalaSoft.MvvmLight.Command.RelayCommand(this.Clear);
         }
 
-        bool CanRunScript()
-        {
-            return !string.IsNullOrWhiteSpace(this.ScriptText);
-        }
-
-        void RunScript()
+        private void RunScript()
         {
             if (!string.IsNullOrWhiteSpace(this.ScriptText))
             {
@@ -95,6 +93,16 @@ namespace ConsoleJS.ViewModel
                     this.ScriptOutput = e.Message;
                 }
             }
+            else
+            {
+                this.ScriptOutput = string.Empty;
+            }
+        }
+
+        private void Clear()
+        {
+            this.ScriptOutput = string.Empty;
+            this.ScriptText = string.Empty;
         }
     }
 }
